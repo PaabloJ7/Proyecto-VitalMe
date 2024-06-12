@@ -1,0 +1,119 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Página Principal - VitalMe{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Columna izquierda para la gráfica de donut -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Progreso de Calorías</h3>
+                    <canvas id="caloriesChart"></canvas>
+                    <div class="mt-4">
+                        <p>Calorías consumidas hoy: {{ totalCalorias }}</p>
+                        <p>Calorías quemadas hoy: {{ caloriasQuemadas }}</p>
+                        <p>Calorías netas hoy: {{ totalCalorias - caloriasQuemadas }}/{{ caloriasObjetivo }}</p>
+                        <p>Calorías necesarias para el objetivo: {{ caloriasObjetivo }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha para las tablas -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Alimentos añadidos hoy</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre Alimento</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Calorías</th>
+                                <th scope="col">Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registros %}
+                                <tr>
+                                    <td>{{ registro.nombreAlimento }}</td>
+                                    <td>{{ registro.cantidad }}</td>
+                                    <td>{{ registro.calorias }}</td>
+                                    <td>{{ registro.fecha|date('H:i') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Ejercicios realizados hoy</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Ejercicio</th>
+                                <th scope="col">Duración (minutos)</th>
+                                <th scope="col">Calorías quemadas</th>
+                                <th scope="col">Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registrosEjercicio %}
+                                <tr>
+                                    <td>{{ registro.ejercicio.nombre }}</td>
+                                    <td>{{ registro.duracionMinutos }}</td>
+                                    <td>{{ registro.duracionMinutos * registro.ejercicio.caloriasPorMinuto }}</td>
+                                    <td>{{ registro.fecha|date('H:i') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('caloriesChart').getContext('2d');
+        var caloriesChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Calorías Consumidas', 'Calorías Por consumir'],
+                datasets: [{
+                    data: [{{ totalCalorias - caloriasQuemadas }}, {{ caloriasObjetivo - (totalCalorias - caloriasQuemadas) }}],
+                    backgroundColor: ['#FF6384', '#36A2EB'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + ' cal';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

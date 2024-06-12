@@ -1,0 +1,133 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Más Información del Alimento{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Más Información del Alimento</h1>
+    <div class="row">
+        <div class="col-md-4 text-center mb-5">
+            {% if alimentoInfo and alimentoInfo['parsed'] %}
+                {% set alimento = alimentoInfo['parsed'][0]['food'] %}
+                <h4>Calorías</h4>
+                <p>{{ alimento['nutrients']['ENERC_KCAL'] ?? 'N/A' }} kcal</p>
+            {% else %}
+                <p>Información del alimento no disponible.</p>
+            {% endif %}
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            {% if alimentoInfo and alimentoInfo['parsed'] %}
+                {% set alimento = alimentoInfo['parsed'][0]['food'] %}
+                <canvas id="donutChart" width="200" height="200"></canvas>
+            {% else %}
+                <p>Información del alimento no disponible.</p>
+            {% endif %}
+        </div>
+        <div class="col-md-4 text-center mb-5">
+            {% if alimentoInfo and alimentoInfo['parsed'] %}
+                {% set alimento = alimentoInfo['parsed'][0]['food'] %}
+                <h4>Nutrientes</h4>
+                <p>Grasas: 4%</p>
+                <p>Carbohidratos: 47%</p>
+                <p>Proteínas: 49%</p>
+            {% else %}
+                <p>Información del alimento no disponible.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-6">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>Fat</th>
+                        <th>Carbs</th>
+                        <th>Protein</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.51g</td>
+                        <td>74.70g</td>
+                        <td>13.00g</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 text-center">
+            {% if alimentoInfo and alimentoInfo['parsed'] %}
+                {% set alimento = alimentoInfo['parsed'][0]['food'] %}
+                <img src="{{ alimento['image'] }}" class="img-fluid rounded" alt="{{ alimento['label'] }}">
+            {% else %}
+                <p>Imagen del alimento no disponible.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('donutChart').getContext('2d');
+        var alimento = {{ alimentoInfo|json_encode|raw }};
+        var donutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Proteínas', 'Grasas', 'Carbohidratos', 'Fibra'],
+                datasets: [{
+                    data: [
+                        alimento.parsed[0].food.nutrients.PROCNT || 0,
+                        alimento.parsed[0].food.nutrients.FAT || 0,
+                        alimento.parsed[0].food.nutrients.CHOCDF || 0,
+                        alimento.parsed[0].food.nutrients.FIBTG || 0
+                    ],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)'
+                    ]
+                }]
+            },
+            options: {
+                cutoutPercentage: 70,
+                animation: {
+                    animateRotate: true
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                    datalabels: {
+                        color: '#fff',
+                        formatter: function (value, context) {
+                            return value + ' g';
+                        }
+                    },
+                    afterDraw: function (chart) {
+                        var sum = chart.config.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                        var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+                        var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+
+                        var fontStyle = 'Arial';
+                        var txt = sum + ' kcal';
+                        var color = '#000';
+                        var fontSize = 16;
+
+                        chart.ctx.font = fontSize + 'px ' + fontStyle;
+                        chart.ctx.fillStyle = color;
+                        chart.ctx.textBaseline = 'middle';
+                        var textWidth = chart.ctx.measureText(txt).width;
+                        chart.ctx.fillText(txt, centerX -
+                            textWidth / 2, centerY + 8); // Ajusta la posición vertical
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}

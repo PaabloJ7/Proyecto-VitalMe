@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Página no encontrada{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="display-4">Error 404</h1>
+                <p class="lead">La página que estás buscando no se pudo encontrar.</p>
+                <p class="mb-5">Quizás escribiste mal la dirección o la página ha sido eliminada.</p>
+                <a href="{{ path('app_home') }}" class="btn btn-primary">Ir a la página de inicio</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

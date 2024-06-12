@@ -1,0 +1,93 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Buscar Alimento - VitalMe{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Buscar Alimento</h1>
+        <form method="get" action="{{ path('buscar_alimento') }}" id="search-form">
+            <div class="mb-3">
+                <label for="nombreAlimento" class="form-label">Nombre del Alimento</label>
+                <input type="text" class="form-control" id="nombreAlimento" name="nombreAlimento" value="{{ app.request.query.get('nombreAlimento') }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        <div id="results"></div>
+
+        {% if alimentoInfo and alimentoInfo['parsed']|length > 0 %}
+            <div class="card mt-4" style="max-width: 250px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ alimentoInfo['parsed'][0]['food']['label'] }}</h5>
+                    <img src="{{ alimentoInfo['parsed'][0]['food']['image'] }}" class="card-img-top" alt="{{ alimentoInfo['parsed'][0]['food']['label'] }}">
+                    <p class="card-text">Calorías: {{ alimentoInfo['parsed'][0]['food']['nutrients']['ENERC_KCAL'] }} kcal por 100g</p>
+                    <form method="get" action="{{ path('buscar_alimento') }}">
+                        <input type="hidden" name="nombreAlimento" value="{{ app.request.query.get('nombreAlimento') }}">
+                        <div class="mb-4">
+                            <label for="cantidad" class="form-label">Cantidad (gramos)</label>
+                            <input type="number" class="form-control" id="cantidad" name="cantidad">
+                        </div>
+<button type="submit" class="btn btn-success">Añadir Alimento</button>
+</form>
+
+<form action="{{ path('mostrar_mas_informacion') }}" method="get">
+    <input type="hidden" name="nombreAlimento" value="{{ app.request.query.get('nombreAlimento') }}">
+    <button type="submit" class="btn btn-primary mt-2">Más Información</button>
+</form>
+
+                </div>
+            </div>
+        {% endif %}
+
+        {% for flash_message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        {% for flash_message in app.flashes('error') %}
+            <div class="alert alert-danger" role="alert">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <style>
+        .card-img-top {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .image-container {
+            max-width: 100px;
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+
+{% block javascripts %}
+<script>
+    $(function() {
+        $("#nombreAlimento").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ path('autocomplete') }}",
+                    dataType: "json",
+                    data: {
+                        q: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2 // Número mínimo de caracteres antes de comenzar la búsqueda
+        });
+    });
+</script>
+
+{% endblock %}
+{% endblock %}

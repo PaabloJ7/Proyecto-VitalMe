@@ -1,0 +1,115 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Pagina de registro{% endblock %}
+
+{% block content %}
+<!-- Contenedor del formulario -->
+<div class="registration-container">
+    <!-- Encabezado del formulario -->
+    <h1>Register</h1>
+
+    <!-- Formulario -->
+    <form action="{{ path('app_register') }}" method="post">
+        <!-- Sección 1: Username -->
+        <div class="form-section active" id="section-username">
+            {{ form_row(registrationForm.username) }}
+            <button type="button" onclick="nextSection('section-username', 'section-genero')">Next</button>
+        </div>
+
+        <!-- Sección 2: Genero -->
+        <div class="form-section" id="section-genero">
+            {{ form_row(registrationForm.genero) }}
+            <button type="button" onclick="nextSection('section-genero', 'section-edad')">Next</button>
+        </div>
+
+        <!-- Sección 3: Edad -->
+        <div class="form-section" id="section-edad">
+            {{ form_row(registrationForm.edad) }}
+            <button type="button" onclick="nextSection('section-edad', 'section-altura')">Next</button>
+        </div>
+
+        <!-- Sección 4: Altura -->
+        <div class="form-section" id="section-altura">
+            {{ form_row(registrationForm.altura) }}
+            <button type="button" onclick="nextSection('section-altura', 'section-peso')">Next</button>
+        </div>
+
+        <!-- Sección 5: Peso -->
+        <div class="form-section" id="section-peso">
+            {{ form_row(registrationForm.peso) }}
+            <button type="button" onclick="nextSection('section-peso', 'section-intensidadfisica')">Next</button>
+        </div>
+
+        <!-- Sección 6: Intensidad Fisica -->
+        <div class="form-section" id="section-intensidadfisica">
+            {{ form_row(registrationForm.intensidadfisica) }}
+            <button type="button" onclick="nextSection('section-intensidadfisica', 'section-email')">Next</button>
+        </div>
+
+        <!-- Sección 7: Email y Contraseña -->
+        <div class="form-section" id="section-email">
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            <input type="hidden" name="_target_path" value="{{ path('app_login') }}">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </form>
+</div>
+
+<script>
+    function nextSection(currentSectionId, nextSectionId) {
+        document.getElementById(currentSectionId).classList.remove('active');
+        document.getElementById(nextSectionId).classList.add('active');
+    }
+</script>
+
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+        margin: 0;
+    }
+
+    .registration-container {
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #343a40;
+        margin-bottom: 20px;
+    }
+
+    .form-section {
+        display: none;
+        text-align: center;
+    }
+
+    .form-section.active {
+        display: block;
+    }
+
+    button {
+        background-color: #1DB954;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #17a74a;
+    }
+</style>
+{% endblock %}

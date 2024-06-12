@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado de Búsqueda</title>
+</head>
+<body>
+    <h1>Resultado de Búsqueda</h1>
+    <p>Etiqueta: {{ alimento.label }}</p>
+    <p>Calorías: {{ alimento.nutrients.ENERC_KCAL }}</p>
+    <p>Proteínas: {{ alimento.nutrients.PROCNT }}</p>
+    <p>Grasas: {{ alimento.nutrients.FAT }}</p>
+    <p>Carbohidratos: {{ alimento.nutrients.CHOCDF }}</p>
+    <p>Fibra: {{ alimento.nutrients.FIBTG }}</p>
+    <img src="{{ alimento.image }}" alt="Imagen de {{ alimento.label }}">
+</body>
+</html>

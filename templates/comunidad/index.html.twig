@@ -1,0 +1,141 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Comunidad{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mb-4 text-center">Comunidad</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Columna de publicaciones recientes -->
+                            <div class="col-md-8">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <form action="{{ path('publicar') }}" method="post" class="mb-4">
+                                            <textarea name="contenido" placeholder="¿Qué está pasando?" class="form-control mb-2" rows="3"></textarea>
+                                            <button type="submit" class="btn btn-primary">Publicar</button>
+                                        </form>
+
+                                        <h2 class="mb-3">Publicaciones Recientes</h2>
+                                        {% for publicacion in publicaciones %}
+                                            <div class="mb-4">
+                                                <div class="card shadow-sm">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <div>
+                                                                <span class="font-weight-bold">{{ publicacion.usuario.username }}</span>
+                                                                <small class="text-muted">{{ publicacion.createdAt|date('d/m/Y H:i') }}</small>
+                                                            </div>
+                                                        </div>
+                                                        <p class="card-text overflow-expand">{{ publicacion.contenido }}</p>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <form action="{{ path('like', {'id': publicacion.id}) }}" method="post">
+                                                                <button type="submit" class="btn btn-outline-primary btn-sm">Me gusta</button>
+                                                            </form>
+                                                            <small class="text-muted">{{ publicacion.likes }} Me gusta</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna de publicaciones destacadas-->
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h2 class="mb-3"> Destacadas</h2>
+                                        {% for publicacion in destacadas %}
+                                            <div class="mb-4">
+                                                <div class="card shadow-sm">
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <div>
+                                                                <span class="font-weight-bold">{{ publicacion.usuario.username }}</span>
+                                                                <small class="text-muted">{{ publicacion.createdAt|date('d/m/Y H:i') }}</small>
+                                                            </div>
+                                                        </div>
+                                                        <p class="card-text overflow-expand">{{ publicacion.contenido }}</p>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <form action="{{ path('like', {'id': publicacion.id}) }}" method="post">
+                                                                <button type="submit" class="btn btn-outline-primary btn-sm">Me gusta</button>
+                                                            </form>
+                                                            <small class="text-muted">{{ publicacion.likes }} Me gusta</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .overflow-expand {
+            max-height: 150px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            cursor: pointer;
+        }
+
+        .overflow-expand:hover {
+            max-height: none;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .card {
+            border-radius: 10px;
+            border: none;
+        }
+
+        .btn-outline-primary {
+            border-radius: 20px;
+        }
+
+        
+        .form-control-lg {
+            height: calc(2.5rem + 10px); 
+            font-size: 1.25rem; 
+        }
+
+.card {
+    border: 1px solid #ccc; 
+    box-shadow: 0 0px 8px rgba(0,0,0,0.2); 
+    margin-bottom: 20px; 
+}
+
+
+.card-destacada {
+    background-color: #f8f9fa; 
+}
+
+
+.btn-like {
+    background-color: #007bff; 
+    color: #fff; 
+    border: none; 
+}
+#searchInput {
+    height: calc(2.5rem + 45px); 
+    font-size: 1rem;
+}
+
+    </style>
+
+
+{% endblock %}

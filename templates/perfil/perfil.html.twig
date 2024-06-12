@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">Personalizar Perfil</h1>
+
+                    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+                        <div class="form-group">
+                            {{ form_row(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Nombre de usuario'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Correo electrónico'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.genero, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.altura, {'attr': {'class': 'form-control', 'placeholder': 'Altura'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.peso, {'attr': {'class': 'form-control', 'placeholder': 'Peso'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.edad, {'attr': {'class': 'form-control', 'placeholder': 'Edad'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.intensidadFisica, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <button id="guardar-cambios" class="btn btn-primary btn-block" style="display: none;" type="submit">Guardar Cambios</button>
+
+                    {{ form_end(form) }}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('guardar-cambios').addEventListener('click', function() {
+        document.getElementById('{{ form.vars.id }}').submit();
+    });
+</script>
+{% endblock %}

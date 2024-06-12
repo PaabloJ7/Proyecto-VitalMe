@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Acesso denegado{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="display-4">Error Acceso</h1>
+                <p class="lead">La página a la que intentas acceder no esta disponible.</p>
+                <p class="mb-5">Quizás no tienes los permisos para acceder.</p>
+                <a href="{{ path('app_home') }}" class="btn btn-primary">Ir a la página de inicio</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Nuevo Registro de Peso{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Gráfico de Progresión de Peso</h1>
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="pesoChart" style="width: 100%; height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('pesoChart').getContext('2d');
+        var pesoData = [
+            {% for peso in pesos %}
+                {{ peso.peso }},
+            {% endfor %}
+        ];
+        var fechasData = [
+            {% for peso in pesos %}
+                '{{ peso.fechapeso|date('Y-m-d') }}',
+            {% endfor %}
+        ];
+        var myChart = new Chart(ctx, {
+            type: 'line', 
+            data: {
+                labels: fechasData,
+                datasets: [{
+                    label: 'Peso (kg)',
+                    data: pesoData,
+                    borderColor: 'rgb(21, 77, 0)',
+                    borderWidth: 1,
+                    fill: {
+                        target: 'origin',
+                        above: 'rgba(255, 0, 0, 0.2)', 
+                        below: 'rgba(255, 0, 0, 0.2)'
+                    }
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        suggestedMin: 40
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Nuevo Registro de Peso</h1>
+            <div class="card">
+                <div class="card-body">
+                    {{ form_start(formulario) }}
+                    {{ form_row(formulario.peso) }}
+                    {{ form_row(formulario.save, {'attr': {'class': 'btn btn-primary'}}) }} 
+                    {{ form_end(formulario) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

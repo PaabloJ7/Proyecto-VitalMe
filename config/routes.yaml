@@ -1,0 +1,29 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+
+
+home:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+buscar_por_palabra_clave:
+    path: '/buscar-por-palabra-clave'
+    controller: 'App\Controller\FoodController::buscarPorPalabraClave'
+    
+autocomplete:
+    path: /autocomplete
+    controller: App\Controller\FoodController::buscarPorPalabraClaveAutocomplete
+
+publicar:
+    path: /publicar
+    controller: App\Controller\ComunidadController::publicar
+    methods: ['POST']
+
+
+

@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Pagina de Login{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}"> 
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <h1 class="text-center">Login</h1>
+                    </div>
+                    <div class="card-body">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="mb-3">
+                                Logged as {{ app.user.userIdentifier }} - <a href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
+
+                        <form action="{{ path('app_login') }}" method="post">
+                            <div class="form-group">
+                                <label for="username">Email:</label>
+                                <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="_password" class="form-control">
+                            </div>
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>        
+                        </form>
+                        <p class="text-center mt-3">No tienes cuenta? <a href="{{ path('app_register') }}" class="register-link">Regístrate aquí</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+    .register-link {
+        color: #127c04;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .register-link:hover {
+        color: #127c04; 
+    }
+    </style>
+</body>
+</html>
+{% endblock %}
