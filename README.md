@@ -1,7 +1,7 @@
 
 # 📚 TFG - VitalMe: Plataforma de Salud Integral
 
-¡Hola! 👋 Soy Pablo Jiménez, y este es mi **Trabajo de Fin de Grado (TFG)**: **VitalMe**, una plataforma innovadora de salud integral desarrollada con las últimas tecnologías web. A continuación, te explico en detalle qué es VitalMe, cómo se desarrolló y cómo puedes explorarlo.
+¡Hola! 👋 Soy Pablo de la Sierra, y este es mi **Trabajo de Fin de Grado (TFG)**: **VitalMe**, una plataforma innovadora de salud integral desarrollada con las últimas tecnologías web. A continuación, te explico en detalle qué es VitalMe, cómo se desarrolló y cómo puedes explorarlo.
 
 ---
 
