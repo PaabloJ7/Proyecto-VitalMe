@@ -7,17 +7,19 @@
 
 ## 🚀 **Idea del Proyecto**
 
-VitalMe nace de la necesidad de ofrecer una **solución digital integral** para el cuidado de la salud, combinando **seguimiento médico, bienestar físico y mental, y recomendaciones personalizadas**. La plataforma está diseñada para:
+VitalMe nace de la necesidad de ofrecer una **solución digital integral** para el cuidado de la salud, La plataforma está diseñada para hacer:
 
-✔ **Pacientes**: Registran sus datos médicos, reciben recomendaciones y hacen un seguimiento de su salud.  
-✔ **Médicos**: Acceden a historiales clínicos, analizan datos y brindan diagnósticos más precisos.  
-✔ **Administradores**: Gestionan usuarios, permisos y contenido de la plataforma.
+- 📊 Seguimiento preciso de macros y nutrientes
+- 🏋️‍ Sistema de ejercicios personalizados
+- 🎯 Gestión inteligente de objetivos
+- 👥 Comunidad activa de usuarios
 
-### 🔍 **Problema que resuelve**
-- **Falta de integración** entre historial médico, actividad física y bienestar emocional.
-- **Dificultad para acceder** a información médica centralizada.
-- **Necesidad de personalización** en recomendaciones de salud.
-
+### 🔍 Problemas que Resuelve
+| Problema Actual | Solución VitalFit |
+|----------------|------------------|
+| Apps genéricas sin personalización | Algoritmos adaptados a tu metabolismo |
+| Dificultad para registrar comidas | Base de datos con +10,000 alimentos |
+| Falta de motivación | Sistema de logros y comunidad |
 ---
 
 ## 🛠 **Tecnologías Utilizadas**
@@ -25,16 +27,14 @@ VitalMe nace de la necesidad de ofrecer una **solución digital integral** para 
 VitalMe está desarrollado con un **stack tecnológico moderno y robusto**:
 
 ### **Frontend** (Interactivo y dinámico)
-- **React.js** + **Vite** (Rendimiento optimizado)  
-- **Tailwind CSS** (Diseño responsive y moderno)  
-- **React Router** (Navegación SPA)  
+- **Symfony** (Rendimiento optimizado)  
+- **Bootstrap** (Diseño responsive y moderno)  
 - **Chart.js** (Gráficos para métricas de salud)  
 - **Formik & Yup** (Validación de formularios)  
 
 ### **Backend** (Escalable y seguro)
 - **Node.js** + **Express** (API RESTful)  
-- **MongoDB** (Base de datos NoSQL flexible)  
-- **Mongoose** (Modelado de datos)  
+- **MySQL** (Base de datos NoSQL flexible)    
 - **JWT** (Autenticación segura)  
 
 ### **DevOps & Herramientas**
@@ -50,20 +50,20 @@ El repositorio está organizado en:
 
 ```
 📦 Proyecto-VitalMe
-├── 📂 client            # Frontend (React + Vite)
-│   ├── src
-│   │   ├── components   # Componentes reutilizables
-│   │   ├── pages        # Vistas de la aplicación
-│   │   ├── hooks        # Custom Hooks
-│   │   ├── context      # Gestión de estado (Auth, etc.)
-│   │   └── styles       # Estilos con Tailwind
-├── 📂 server            # Backend (Node.js + Express)
-│   ├── controllers      # Lógica de endpoints
-│   ├── models           # Esquemas de MongoDB
-│   ├── routes           # Rutas de la API
-│   └── middleware       # Autenticación y validaciones
-├── 📂 docs              # Documentación (memoria TFG, diagramas)
-└── 📜 README.md         # Este archivo
+├── 📂 assets/            # Assets frontend
+├── 📂 bin/               # Comandos Symfony
+├── 📂 config/            # Configuración
+├── 📂 migrations/        # Migraciones de BD
+├── 📂 public/            # Punto de entrada
+├── 📂 src/
+│   ├── Controller/       # Controladores
+│   ├── Entity/           # Entidades Doctrine
+│   ├── Form/             # Formularios
+│   ├── Repository/       # Repositorios
+│   └── Service/          # Lógica de negocio
+├── 📂 templates/         # Twig templates
+├── 📂 tests/             # Pruebas
+└── 📂 client/            # Frontend React/Vite
 ```
 
 ---
@@ -75,19 +75,14 @@ El repositorio está organizado en:
 - Protección de rutas según rol (paciente, médico, admin).  
 
 ### **2. Dashboard de Salud Personalizado**  
-- Visualización de métricas (peso, presión arterial, actividad física).  
+- Visualización de métricas (peso, actividad física...).  
 - Gráficos interactivos para seguimiento histórico.  
-
-### **3. Historial Médico Digital**  
-- Almacenamiento de consultas, diagnósticos y recetas.  
-- Acceso rápido para médicos autorizados.  
 
 ### **4. Recomendaciones Inteligentes**  
 - Sugerencias de ejercicios, alimentación y descanso basadas en datos.  
 
 ### **5. Panel de Administración**  
-- Gestión de usuarios (altas, bajas, permisos).  
-- Moderación de contenido médico.  
+- Gestión de usuarios (altas, bajas, permisos, usuarios).   
 
 ---
 
@@ -98,47 +93,54 @@ El repositorio está organizado en:
 - **Diseño responsive** que funciona en móvil y desktop.  
 - **API RESTful bien estructurada** para futuras mejoras.  
 
-### ⚠ **Desafíos superados**  
-- **Gestión de estados complejos** (ej: datos médicos en tiempo real).  
-- **Seguridad de datos sensibles** (encriptación, JWT).  
-- **Optimización de consultas** a MongoDB para evitar lentitud.  
-
----
-
 ## 📖 **Cómo Probarlo Localmente**
 
 Si quieres ejecutar VitalMe en tu máquina:
 
-### **Requisitos previos**
-- Node.js (v18+)  
-- MongoDB (local o Atlas)  
+### Requisitos previos
+- PHP 8.2+
+- Symfony CLI
+- Composer
+- MySQL 5.7+ o PostgreSQL
+- Node.js 18+ (para el frontend)
 
-### **Pasos**
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/PaabloJ7/Proyecto-VitalMe.git
-   ```
-2. Instala dependencias del **backend**:
-   ```bash
-   cd server
-   npm install
-   ```
-3. Configura las variables de entorno (crea un `.env` basado en `.env.example`).  
-4. Inicia el servidor:
-   ```bash
-   npm run dev
-   ```
-5. Instala dependencias del **frontend** (en otra terminal):
-   ```bash
-   cd ../client
-   npm install
-   ```
-6. Ejecuta el frontend:
-   ```bash
-   npm run dev
-   ```
-7. Abre `http://localhost:5173` en tu navegador.  
+### Pasos de instalación
 
+1. **Clonar el repositorio**
+``bash
+git clone https://github.com/PaabloJ7/Proyecto-VitalMe.git
+cd Proyecto-VitalMe
+2. Instalar dependencias PHP
+
+bash
+composer install
+Configurar entorno
+
+bash
+cp .env .env.local
+# Editar .env.local con tus credenciales de BD
+Crear base de datos
+
+bash
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+Cargar datos iniciales (opcional)
+
+bash
+php bin/console doctrine:fixtures:load
+Instalar assets frontend
+
+bash
+cd client
+npm install
+npm run build
+Iniciar servidor Symfony
+
+bash
+symfony serve -d
+Acceder a la aplicación
+
+http://localhost:8000
 ---
 
 ## 📜 **Documentación Adicional**
@@ -160,11 +162,10 @@ Si quieres ejecutar VitalMe en tu máquina:
 ---
 
 ## 📧 **Contacto**
-- **Autor**: Pablo Jiménez  
+- **Autor**: Pablo de la Sierra 
 - **GitHub**: [@PaabloJ7](https://github.com/PaabloJ7)  
-- **LinkedIn**: [Pablo Jiménez](https://www.linkedin.com/in/tu-perfil)  
+- **LinkedIn**: [Pablo de la Sierra](https://www.linkedin.com/in/pablosierra-dev)  
 
 ---
 
 **¡Gracias por tu interés en VitalMe!** ❤️  
-*"La salud es riqueza, y la tecnología puede ayudarnos a preservarla."*
